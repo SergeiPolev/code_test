@@ -9,7 +9,10 @@ namespace Hexes
 {
     public class HexGrid
     {
+        #region Directions
+
         // axial-направления (q,r) – тот же порядок, что и обычные соседства
+
         private static readonly (int dq, int dr)[] AXIAL_DIRS =
         {
             (1, 0),
@@ -21,6 +24,7 @@ namespace Hexes
         };
 
         // EVEN-Q (pointy-top) соседства
+
         private static readonly Vector2Int[] NEIGHBOURS_EVEN =
         {
             new(+1, 0),
@@ -40,6 +44,8 @@ namespace Hexes
             new(0, -1),
             new(-1, +1),
         };
+
+        #endregion
 
         private readonly LevelAsset _levelAsset;
 
@@ -226,9 +232,9 @@ namespace Hexes
             return best;
         }
         // ----- КОЛЬЦО РАДИУСА R ОТ (cx,cy) -----
-// ----- AXIAL / OFFSET / DISTANCE -----
-
-// axial q,r для pointy-top even-q (как у нас в гриде)
+        // ----- AXIAL / OFFSET / DISTANCE -----
+        
+        // axial q,r для pointy-top even-q (как у нас в гриде)
         private (int q, int r) OffsetToAxial(int x, int y)
         {
             var q = x;

@@ -1,57 +1,60 @@
 using System;
-using Infrastructure;
-using Services;
+using Infrastructure.Services;
+using Infrastructure.Services.Gameplay;
 using UnityEngine;
 
-public class ShufflePilesBooster : IBooster
+namespace Boosters
 {
-    private HexPilesService _pilesService;
-    private float _timer;
-    
-    public event Action<BoosterProgressEvent> OnProgressChanged;
-
-    public event Action OnActivated;
-    public event Action OnDeactivated;
-    
-    public bool IsActive { get; private set; }
-
-    public BoosterId BoosterId => BoosterId.ShufflePiles;
-    
-    public ShufflePilesBooster(AllServices services)
+    public class ShufflePilesBooster : IBooster
     {
-        _pilesService = services.Single<HexPilesService>();
-    }
+        private HexPilesService _pilesService;
+        private float _timer;
     
-    public void Activate()
-    {
-        IsActive = true;
+        public event Action<BoosterProgressEvent> OnProgressChanged;
 
-        _timer = 0;
-        _pilesService.ShufflePiles();
-        OnActivated?.Invoke();
-    }
+        public event Action OnActivated;
+        public event Action OnDeactivated;
+    
+        public bool IsActive { get; private set; }
 
-    public void Tick()
-    {
-        if (IsActive == false)
+        public BoosterId BoosterId => BoosterId.ShufflePiles;
+    
+        public ShufflePilesBooster(AllServices services)
         {
-            return;
+            _pilesService = services.Single<HexPilesService>();
+        }
+    
+        public void Activate()
+        {
+            IsActive = true;
+
+            _timer = 0;
+            _pilesService.ShufflePiles();
+            OnActivated?.Invoke();
         }
 
-        _timer += Time.deltaTime;
+        public void Tick()
+        {
+            if (IsActive == false)
+            {
+                return;
+            }
 
-        if (_timer >= 1f)
+            _timer += Time.deltaTime;
+
+            if (_timer >= 1f)
+            {
+                IsActive = false;
+            }
+        
+            OnProgressChanged?.Invoke(new BoosterProgressEvent(_timer, 1, 1 - _timer));
+        }
+
+        public void Deactivate()
         {
             IsActive = false;
+        
+            OnDeactivated?.Invoke();
         }
-        
-        OnProgressChanged?.Invoke(new BoosterProgressEvent(_timer, 1, 1 - _timer));
-    }
-
-    public void Deactivate()
-    {
-        IsActive = false;
-        
-        OnDeactivated?.Invoke();
     }
 }

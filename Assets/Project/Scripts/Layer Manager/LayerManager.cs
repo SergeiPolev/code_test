@@ -1,13 +1,10 @@
-public static class LayerManager
+namespace Layer_Manager
 {
-    public static int CellLayer = 3;
-    public static int HexPileLayer = 6;
-
-    public static int CellLayerMask = 1 << CellLayer;
-    public static int HexPileLayerMask = 1 << HexPileLayer;
-
-    public static bool SameLayer(int originLayer, int checkLayer)
+    public static class LayerManager
     {
-        return originLayer == checkLayer;
+        public static int CellLayer = 3;
+        public static int HexPileLayer = 6;
+
+        public static int HexPileLayerMask = 1 << HexPileLayer;
     }
 }

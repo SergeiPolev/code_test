@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using CW.Common;
+using UnityEngine;
 using UnityEngine.UI;
-using CW.Common;
 
 namespace CW.Common
 {

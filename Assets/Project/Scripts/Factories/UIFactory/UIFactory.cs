@@ -1,6 +1,10 @@
+using Infrastructure.Services;
+using Infrastructure.Services.Core;
+using UI;
+using UI.Base;
 using UnityEngine;
 
-namespace Services
+namespace Factories.UIFactory
 {
     public class UIFactory : IService
     {

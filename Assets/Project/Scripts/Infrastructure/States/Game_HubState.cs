@@ -1,7 +1,11 @@
-using StateMachine;
-using Services;
+using Infrastructure.Services;
+using Infrastructure.Services.Core;
+using Infrastructure.StateMachine;
+using UI;
+using UI.FadeWindow;
+using UI.HubWindow;
 
-namespace Infrastructure
+namespace Infrastructure.States
 {
     internal class Game_HubState : IState
     {

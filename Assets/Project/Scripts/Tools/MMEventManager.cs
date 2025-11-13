@@ -4,10 +4,10 @@
 #endif
 
 using System;
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace MoreMountains.Tools
+namespace Tools
 {	
 	/// <summary>
 	/// MMGameEvents are used throughout the game for general game events (game started, game ended, life lost, etc.)

@@ -1,4 +1,7 @@
-public interface ITick
+namespace Infrastructure.StateMachine
 {
-    void Tick();
+    public interface ITick
+    {
+        void Tick();
+    }
 }

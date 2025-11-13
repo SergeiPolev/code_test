@@ -1,8 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
-using LoggerFile.Element;
 
-namespace LoggerFile
+namespace Tools.Logger
 {
     public static class Logger 
     {

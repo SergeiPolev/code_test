@@ -1,19 +1,17 @@
-﻿using Services;
-using IState = StateMachine.IState;
+﻿using Infrastructure.Services;
+using Infrastructure.Services.Gameplay;
+using Infrastructure.StateMachine;
+using StateMachine_IState = Infrastructure.StateMachine.IState;
 
-namespace Infrastructure
+namespace Infrastructure.States
 {
-    internal class Game_LevelState : IState, ITick, IFixedTick, ILateTick
+    internal class Game_LevelState : StateMachine_IState, ITick, IFixedTick, ILateTick
     {
-        private IGameStateChanger _stateChanger;
-        
         private LevelStateMachine _lvlStageMachine;
 
-        public Game_LevelState(IGameStateChanger stateChanger, AllServices services, ICoroutineRunner coroutineRunner)
+        public Game_LevelState(IGameStateChanger stateChanger, AllServices services)
         {
-            _stateChanger = stateChanger;
-
-            _lvlStageMachine = new LevelStateMachine(stateChanger, services, coroutineRunner);
+            _lvlStageMachine = new LevelStateMachine(stateChanger, services);
             services.Single<ResultService>().SetLevelStateChanger(_lvlStageMachine);
         }
 

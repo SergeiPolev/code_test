@@ -1,6 +1,6 @@
+using CW.Common;
 using UnityEngine;
 using UnityEngine.Events;
-using CW.Common;
 
 namespace Lean.Common
 {

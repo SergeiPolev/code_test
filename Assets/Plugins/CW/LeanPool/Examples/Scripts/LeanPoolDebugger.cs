@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using CW.Common;
+﻿using CW.Common;
+using UnityEngine;
 
 namespace Lean.Pool.Examples
 {

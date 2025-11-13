@@ -1,4 +1,4 @@
-namespace Services
+namespace Infrastructure.Services
 {
     public interface ITickable
     {

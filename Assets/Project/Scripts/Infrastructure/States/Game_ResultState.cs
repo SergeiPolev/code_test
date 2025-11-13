@@ -1,15 +1,19 @@
-using StateMachine;
-using Services;
+using Infrastructure.Services;
+using Infrastructure.Services.Core;
+using Infrastructure.Services.Progress;
+using Infrastructure.StateMachine;
+using UI;
+using UI.Results;
 
-public enum LevelResult
+namespace Infrastructure.States
 {
-    WIN,
-    LOSE,
-    LEAVE
-}
+    public enum LevelResult
+    {
+        WIN,
+        LOSE,
+        LEAVE
+    }
 
-namespace Infrastructure
-{
     internal class Game_ResultState : ITick, IPayloadedState<LevelResult>
     {
         private WindowService _windowService;

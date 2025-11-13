@@ -1,7 +1,7 @@
-﻿using Services;
-using StateMachine;
+﻿using Infrastructure.Services;
+using Infrastructure.StateMachine;
 
-namespace Infrastructure
+namespace Infrastructure.States
 {
     public class Game_AppQuit_State : IState
     {

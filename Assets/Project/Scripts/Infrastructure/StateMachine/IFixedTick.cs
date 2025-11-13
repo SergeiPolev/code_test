@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IFixedTick
+namespace Infrastructure.StateMachine
 {
-    void FixedTick();
+    public interface IFixedTick
+    {
+        void FixedTick();
+    }
 }

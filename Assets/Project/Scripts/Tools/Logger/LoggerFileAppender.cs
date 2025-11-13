@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace LoggerFile.Element
+namespace Tools.Logger
 {
     public class LoggerFileAppender
     {
-        private readonly object _lockObject = new object();
+        private readonly object _lockObject = new();
         public string FileName { get; }
 
         public LoggerFileAppender(string file)

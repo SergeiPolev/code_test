@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Infrastructure.Services.Core;
+using Infrastructure.Services.Gameplay;
 using UnityEngine;
 
-namespace Infrastructure
+namespace Hexes
 {
     public class HexCell
     {

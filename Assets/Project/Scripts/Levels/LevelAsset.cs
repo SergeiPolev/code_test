@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Infrastructure;
+using Infrastructure.Services.Gameplay;
 using UnityEngine;
 
 namespace Levels

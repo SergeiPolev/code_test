@@ -4,13 +4,10 @@ https://www.michaelkremmel.de
 All rights reserved
 *****************************************************/
 #if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using Configuration = MK.Toon.Editor.InstallWizard.Configuration;
 using System.Text;
-using UnityEditor.PackageManager.UI;
+using UnityEditor;
+using UnityEngine;
+using Configuration = MK.Toon.Editor.InstallWizard.Configuration;
 
 namespace MK.Toon.Editor
 {

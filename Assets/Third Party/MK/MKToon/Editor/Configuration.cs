@@ -6,11 +6,11 @@
 // Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 #if UNITY_EDITOR
 
@@ -19,7 +19,6 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 #endif
 
-using Configuration = MK.Toon.Editor.InstallWizard.Configuration;
 namespace MK.Toon.Editor.InstallWizard
 {
     //[CreateAssetMenu(fileName = "Configuration", menuName = "MK/Install Wizard/Create Configuration Asset")]

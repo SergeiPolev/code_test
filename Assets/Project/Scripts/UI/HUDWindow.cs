@@ -1,41 +1,47 @@
-using Infrastructure;
-using Services;
+using Infrastructure.Services;
+using Infrastructure.Services.Gameplay;
+using Infrastructure.Services.Progress;
 using TMPro;
+using UI.Base;
+using UI.Boosters;
 using UnityEngine;
 
-public class HUDWindow : WindowBase
+namespace UI
 {
-    public override WindowId WindowID => WindowId.HUD;
-    
-    private LevelProgressService _levelProgressService;
-    
-    [SerializeField] private TMP_Text _level;
-    [SerializeField] private ProgressBar _progressBar;
-    [SerializeField] private BoosterButton[] _boosterButtons;
-
-    protected override void _Initialize(AllServices services)
+    public class HUDWindow : WindowBase
     {
-        _levelProgressService = services.Single<LevelProgressService>();
-        services.Single<ClearStackService>().OnClearCompleted += UpdateProgressBar;
-        
-        foreach (var boosterButton in _boosterButtons)
+        public override WindowId WindowID => WindowId.HUD;
+    
+        private LevelProgressService _levelProgressService;
+    
+        [SerializeField] private TMP_Text _level;
+        [SerializeField] private ProgressBar _progressBar;
+        [SerializeField] private BoosterButton[] _boosterButtons;
+
+        protected override void _Initialize(AllServices services)
         {
-            boosterButton.Initialize(services.Single<BoosterService>());
+            _levelProgressService = services.Single<LevelProgressService>();
+            services.Single<ClearStackService>().OnClearCompleted += UpdateProgressBar;
+        
+            foreach (var boosterButton in _boosterButtons)
+            {
+                boosterButton.Initialize(services.Single<BoosterService>());
+            }
         }
-    }
 
-    private void UpdateProgressBar()
-    {
-        _progressBar.UpdateValue(_levelProgressService.HexesCurrent, _levelProgressService.HexesGoal);
-    }
+        private void UpdateProgressBar()
+        {
+            _progressBar.UpdateValue(_levelProgressService.HexesCurrent, _levelProgressService.HexesGoal);
+        }
 
-    protected override void _Open()
-    {
-        base._Open();
+        protected override void _Open()
+        {
+            base._Open();
 
-        var lvl = _levelProgressService.CurrentLevelNumber;
-        _level.SetText($"Level {lvl}");
-        _progressBar.Initialize();
-        UpdateProgressBar();
+            var lvl = _levelProgressService.CurrentLevelNumber;
+            _level.SetText($"Level {lvl}");
+            _progressBar.Initialize();
+            UpdateProgressBar();
+        }
     }
 }

@@ -1,45 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public static class DebugLogger
+namespace Tools.Logger
 {
-    public static void Log(string msg)
+    public static class DebugLogger
     {
+        public static void Log(string msg)
+        {
 #if DEBUG
-        Debug.Log(msg);
+            Debug.Log(msg);
 #endif
-    }
-    public static void LogFormat(string msg, params object[] args)
-    {
+        }
+        public static void LogFormat(string msg, params object[] args)
+        {
 #if DEBUG
-        Debug.LogFormat(msg, args);
+            Debug.LogFormat(msg, args);
 #endif
-    }
-    public static void LogWarning(string msg)
-    {
+        }
+        public static void LogWarning(string msg)
+        {
 #if DEBUG
-        Debug.LogWarning(msg);
+            Debug.LogWarning(msg);
 #endif
-    }
-    public static void LogWarningFormat(string msg, params object[] args)
-    {
+        }
+        public static void LogWarningFormat(string msg, params object[] args)
+        {
 #if DEBUG
-        Debug.LogWarningFormat(msg, args);
+            Debug.LogWarningFormat(msg, args);
 #endif
-    }
-    public static void LogError(string msg)
-    {
+        }
+        public static void LogError(string msg)
+        {
 #if DEBUG
-        Debug.LogError(msg);
+            Debug.LogError(msg);
 #endif
-    }
-    public static void LogErrorFormat(string msg, params object[] args)
-    {
+        }
+        public static void LogErrorFormat(string msg, params object[] args)
+        {
 #if DEBUG
-        Debug.LogErrorFormat(msg, args);
+            Debug.LogErrorFormat(msg, args);
 #endif
-    }
+        }
 
 
+    }
 }

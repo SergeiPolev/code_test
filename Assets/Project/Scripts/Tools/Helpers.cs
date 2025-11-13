@@ -1,36 +1,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Helpers
+namespace Tools
 {
-    public static readonly Dictionary<float, WaitForSeconds> WaitForSeconds = new();
-    public static readonly Dictionary<float, WaitForSecondsRealtime> WaitForSecondsRealtime = new();
-    public static readonly WaitForFixedUpdate WaitForFixedUpdate = new WaitForFixedUpdate();
-    public static WaitForSeconds GetWaitForSeconds(float seconds)
+    public static class Helpers
     {
-        if (WaitForSeconds.TryGetValue(seconds, out WaitForSeconds forSeconds))
+        public static readonly Dictionary<float, WaitForSeconds> WaitForSeconds = new();
+        public static readonly Dictionary<float, WaitForSecondsRealtime> WaitForSecondsRealtime = new();
+        public static readonly WaitForFixedUpdate WaitForFixedUpdate = new();
+        public static WaitForSeconds GetWaitForSeconds(float seconds)
         {
-            return forSeconds;
+            if (WaitForSeconds.TryGetValue(seconds, out WaitForSeconds forSeconds))
+            {
+                return forSeconds;
+            }
+            else
+            {
+                WaitForSeconds waitForSeconds = new WaitForSeconds(seconds);
+                WaitForSeconds.Add(seconds, waitForSeconds);
+                return waitForSeconds;
+            }
         }
-        else
-        {
-            WaitForSeconds waitForSeconds = new WaitForSeconds(seconds);
-            WaitForSeconds.Add(seconds, waitForSeconds);
-            return waitForSeconds;
-        }
-    }
 
-    public static WaitForSecondsRealtime GetWaitForSecondsRealtime(float seconds)
-    {
-        if (WaitForSecondsRealtime.TryGetValue(seconds, out WaitForSecondsRealtime forSeconds))
+        public static WaitForSecondsRealtime GetWaitForSecondsRealtime(float seconds)
         {
-            return forSeconds;
-        }
-        else
-        {
-            WaitForSecondsRealtime waitForSeconds = new WaitForSecondsRealtime(seconds);
-            WaitForSecondsRealtime.Add(seconds, waitForSeconds);
-            return waitForSeconds;
+            if (WaitForSecondsRealtime.TryGetValue(seconds, out WaitForSecondsRealtime forSeconds))
+            {
+                return forSeconds;
+            }
+            else
+            {
+                WaitForSecondsRealtime waitForSeconds = new WaitForSecondsRealtime(seconds);
+                WaitForSecondsRealtime.Add(seconds, waitForSeconds);
+                return waitForSeconds;
+            }
         }
     }
 }

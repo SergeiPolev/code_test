@@ -1,6 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
-using StateMachine;
-using Services;
+using Infrastructure.Services;
+using Infrastructure.Services.Core;
+using Infrastructure.Services.Gameplay;
+using Infrastructure.Services.Progress;
+using Infrastructure.StateMachine;
+using UI;
 using UnityEngine;
 
 namespace Infrastructure
@@ -8,22 +12,18 @@ namespace Infrastructure
     public class Level_InitLevelState : IState
     {
         private IStateChanger _stateChanger;
-        private readonly IGameStateChanger _gameStateChanger;
         private WindowService _windowService;
         private LevelProgressService _levelProgress;
-        private GameWalletService _wallet;
         private IHexGridService _hexGridService;
         private CameraService _cameraService;
         private CancellationAsyncService _cancellationAsyncService;
         private ResultService _resultService;
 
-        public Level_InitLevelState(IStateChanger stateChanger, IGameStateChanger gameStateChanger, AllServices services)
+        public Level_InitLevelState(IStateChanger stateChanger, AllServices services)
         {
             _stateChanger = stateChanger;
-            this._gameStateChanger = gameStateChanger;
             _windowService = services.Single<WindowService>();
             _levelProgress = services.Single<LevelProgressService>();
-            _wallet = services.Single<GameWalletService>();
             _hexGridService = services.Single<IHexGridService>();
             _cameraService = services.Single<CameraService>();
             _cancellationAsyncService = services.Single<CancellationAsyncService>();

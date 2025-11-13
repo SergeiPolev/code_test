@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace StateMachine
+namespace Infrastructure.StateMachine
 {
     public abstract class StateMachineBase
     {

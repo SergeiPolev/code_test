@@ -1,8 +1,12 @@
 using System.Collections.Generic;
+using UI.Base;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "WindowStaticData", menuName = "ScriptableObjects/StaticData/Window")]
-public class WindowStaticData : ScriptableObject
+namespace UI
 {
-    public List<WindowBase> Configs;
+    [CreateAssetMenu(fileName = "WindowStaticData", menuName = "ScriptableObjects/StaticData/Window")]
+    public class WindowStaticData : ScriptableObject
+    {
+        public List<WindowBase> Configs;
+    }
 }

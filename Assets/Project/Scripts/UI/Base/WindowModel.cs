@@ -1,11 +1,14 @@
 using System;
 
-public class WindowModel
+namespace UI.Base
 {
-    public Action OnCloseAction;
-
-    public WindowModel(Action onClosedAction = null)
+    public class WindowModel
     {
-        OnCloseAction = onClosedAction;
+        public Action OnCloseAction;
+
+        public WindowModel(Action onClosedAction = null)
+        {
+            OnCloseAction = onClosedAction;
+        }
     }
 }

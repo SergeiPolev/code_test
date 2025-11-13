@@ -1,6 +1,9 @@
-using UnityEngine;
+using UI.Base;
 
-public class LoadingScreen : WindowBase
+namespace UI
 {
-    public override WindowId WindowID => WindowId.LoadingScreen;
+    public class LoadingScreen : WindowBase
+    {
+        public override WindowId WindowID => WindowId.LoadingScreen;
+    }
 }

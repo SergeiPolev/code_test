@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Crystal
+namespace Tools
 {
     /// <summary>
     /// Safe area implementation for notched mobile devices. Usage:
@@ -55,8 +55,8 @@ namespace Crystal
         /// </summary>
         Rect[] NSA_iPhoneX = new Rect[]
         {
-            new Rect (0f, 102f / 2436f, 1f, 2202f / 2436f),  // Portrait
-            new Rect (132f / 2436f, 63f / 1125f, 2172f / 2436f, 1062f / 1125f)  // Landscape
+            new(0f, 102f / 2436f, 1f, 2202f / 2436f),  // Portrait
+            new(132f / 2436f, 63f / 1125f, 2172f / 2436f, 1062f / 1125f)  // Landscape
         };
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace Crystal
         /// </summary>
         Rect[] NSA_iPhoneXsMax = new Rect[]
         {
-            new Rect (0f, 102f / 2688f, 1f, 2454f / 2688f),  // Portrait
-            new Rect (132f / 2688f, 63f / 1242f, 2424f / 2688f, 1179f / 1242f)  // Landscape
+            new(0f, 102f / 2688f, 1f, 2454f / 2688f),  // Portrait
+            new(132f / 2688f, 63f / 1242f, 2424f / 2688f, 1179f / 1242f)  // Landscape
         };
 
         /// <summary>
@@ -83,8 +83,8 @@ namespace Crystal
         /// </summary>
         Rect[] NSA_Pixel3XL_LSL = new Rect[]
         {
-            new Rect (0f, 0f, 1f, 2789f / 2960f),  // Portrait
-            new Rect (0f, 0f, 2789f / 2960f, 1f)  // Landscape
+            new(0f, 0f, 1f, 2789f / 2960f),  // Portrait
+            new(0f, 0f, 2789f / 2960f, 1f)  // Landscape
         };
 
         /// <summary>
@@ -92,15 +92,15 @@ namespace Crystal
         /// </summary>
         Rect[] NSA_Pixel3XL_LSR = new Rect[]
         {
-            new Rect (0f, 0f, 1f, 2789f / 2960f),  // Portrait
-            new Rect (171f / 2960f, 0f, 2789f / 2960f, 1f)  // Landscape
+            new(0f, 0f, 1f, 2789f / 2960f),  // Portrait
+            new(171f / 2960f, 0f, 2789f / 2960f, 1f)  // Landscape
         };
         #endregion
 
         RectTransform Panel;
 		private int LastNativeCutoutHeight;
-        Rect LastSafeArea = new Rect (0, 0, 0, 0);
-        Vector2Int LastScreenSize = new Vector2Int (0, 0);
+        Rect LastSafeArea = new(0, 0, 0, 0);
+        Vector2Int LastScreenSize = new(0, 0);
         ScreenOrientation LastOrientation = ScreenOrientation.AutoRotation;
         [SerializeField] bool ConformX = true;  // Conform to screen safe area on X-axis (default true, disable to ignore)
         [SerializeField] bool ConformY = true;  // Conform to screen safe area on Y-axis (default true, disable to ignore)

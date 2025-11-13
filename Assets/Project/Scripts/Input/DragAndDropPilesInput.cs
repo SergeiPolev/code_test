@@ -1,7 +1,10 @@
-using Services;
+using Hexes;
+using Infrastructure.Services.Core;
+using Infrastructure.Services.Gameplay;
+using Layer_Manager;
 using UnityEngine;
 
-namespace Infrastructure
+namespace Input
 {
     public class DragAndDropPilesInput : IInputListener
     {
@@ -118,7 +121,7 @@ namespace Infrastructure
         private Ray GetMouseRay()
         {
             Camera camera = _cameraService.Camera;
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = camera.ScreenPointToRay(UnityEngine.Input.mousePosition);
             return ray;
         }
 

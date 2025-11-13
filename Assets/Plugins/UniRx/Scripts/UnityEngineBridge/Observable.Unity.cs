@@ -5,10 +5,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UniRx.InternalUtil;
 using UniRx.Triggers;
 using UnityEngine;
-using System.Threading;
 
 #if !UniRxLibrary
 using SchedulerUnity = UniRx.Scheduler;

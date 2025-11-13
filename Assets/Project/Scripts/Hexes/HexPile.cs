@@ -1,9 +1,10 @@
 using System;
 using DG.Tweening;
+using Extensions;
 using Lean.Pool;
 using UnityEngine;
 
-namespace Infrastructure
+namespace Hexes
 {
     public class HexPile : MonoBehaviour
     {

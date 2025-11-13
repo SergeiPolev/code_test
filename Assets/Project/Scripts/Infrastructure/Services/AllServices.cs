@@ -1,25 +1,18 @@
 using System;
 using System.Collections.Generic;
 
-namespace Services
+namespace Infrastructure.Services
 {
     public class AllServices
     {
         private static AllServices _instance;
         public static AllServices Container => _instance ??= new AllServices();
 
-        public List<ISavedProgressReader> ProgressReaders { get; } = new();
-        public List<ISaveProgressWriter> ProgressWirters { get; } = new();
         public List<IDisposable> Disposables { get; } = new();
 
         public void RegisterSingle<TService>(TService implementation) where TService : IService
         {
             Implementation<TService>.ServiceInstance = implementation;
-
-            if (Implementation<TService>.ServiceInstance is ISavedProgressReader progressReader)
-            {
-                Register(progressReader);
-            }
 
             if (Implementation<TService>.ServiceInstance is IDisposable disposable)
             {
@@ -35,14 +28,6 @@ namespace Services
         private static class Implementation<TService> where TService : IService
         {
             public static TService ServiceInstance;
-        }
-
-        private void Register(ISavedProgressReader progressReader)
-        {
-            if (progressReader is ISaveProgressWriter progressWriter)            
-                ProgressWirters.Add(progressWriter);
-
-            ProgressReaders.Add(progressReader);
         }
     }
 }

@@ -2,25 +2,28 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
-public static class TweenExtension
+namespace Extensions
 {
-    public static UniTask ToUniTask(this Tween t, CancellationToken token)
+    public static class TweenExtension
     {
-        if (t != null)
+        public static UniTask ToUniTask(this Tween t, CancellationToken token)
         {
-            return t.AsyncWaitForCompletion().AsUniTask().AttachExternalCancellation(token);
-        }
+            if (t != null)
+            {
+                return t.AsyncWaitForCompletion().AsUniTask().AttachExternalCancellation(token);
+            }
 
-        return UniTask.NextFrame(token);
-    }
-    public static Tween KillTo0(this Tween t, bool andPlay = true)
-    {
-        if (t != null)
+            return UniTask.NextFrame(token);
+        }
+        public static Tween KillTo0(this Tween t, bool andPlay = true)
         {
-            t.Goto(0, andPlay);
-            t.Kill();
-        }
+            if (t != null)
+            {
+                t.Goto(0, andPlay);
+                t.Kill();
+            }
 
-        return null;
+            return null;
+        }
     }
 }

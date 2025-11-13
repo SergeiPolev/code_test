@@ -6,10 +6,9 @@
 // Copyright © 2020 All rights reserved.            //
 //////////////////////////////////////////////////////
 
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 #if UNITY_EDITOR
 namespace MK.Toon.Editor

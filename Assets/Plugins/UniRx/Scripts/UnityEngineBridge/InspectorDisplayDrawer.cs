@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Reflection;
-using UnityEngine;
-using System.Text.RegularExpressions;
-using System.Collections;
 using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;

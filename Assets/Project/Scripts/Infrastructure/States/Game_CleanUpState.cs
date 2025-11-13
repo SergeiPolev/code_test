@@ -1,24 +1,22 @@
-using StateMachine;
-using Services;
+using Infrastructure.Services;
+using Infrastructure.Services.Core;
+using Infrastructure.StateMachine;
 
-namespace Infrastructure
+namespace Infrastructure.States
 {
     internal class Game_CleanUpState :  IState
     {
         private IGameStateChanger _stateChanger;
         private WindowService _windowService;
-        private GameWalletService _wallet;
 
         public Game_CleanUpState(IGameStateChanger stateChanger, AllServices services)
         {
             _stateChanger = stateChanger;
             _windowService = services.Single<WindowService>();
-            _wallet = services.Single<GameWalletService>();
         }
 
         public void Enter()
         {
-            _wallet.Cleanup();
             SetState();
         }
         

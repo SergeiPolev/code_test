@@ -5,9 +5,9 @@
 
 #if UNITY_2022_SUPPORT || UNITY_2023_3_OR_NEWER
 
-using Cysharp.Threading.Tasks.Internal;
 using System;
 using System.Threading;
+using Cysharp.Threading.Tasks.Internal;
 using UnityEngine;
 
 namespace Cysharp.Threading.Tasks

@@ -1,8 +1,12 @@
-using Infrastructure;
+using Boosters.Views;
+using Hexes;
+using Infrastructure.Services;
+using Infrastructure.Services.Core;
+using Infrastructure.Services.Gameplay;
 using Lean.Pool;
 using UnityEngine;
 
-namespace Services
+namespace Factories.GameFactory
 {
     public class GameFactory : IService
     {

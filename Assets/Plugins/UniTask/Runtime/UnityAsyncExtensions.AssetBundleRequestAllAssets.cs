@@ -3,10 +3,10 @@
 #if UNITY_2018_4 || UNITY_2019_4_OR_NEWER
 #if UNITASK_ASSETBUNDLE_SUPPORT
 
-using Cysharp.Threading.Tasks.Internal;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Cysharp.Threading.Tasks.Internal;
 using UnityEngine;
 
 namespace Cysharp.Threading.Tasks

@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Threading;
 using UnityEngine;
 
-namespace LoggerFile.Element
+namespace Tools.Logger
 {
     public class LoggerFileWriter
     {
@@ -12,8 +12,8 @@ namespace LoggerFile.Element
         private LoggerFileAppender _appender;
         private Thread _workThread;
         private bool _disposing;
-        private readonly ConcurrentQueue<LogMessage> _messages = new ConcurrentQueue<LogMessage>();
-        private readonly ManualResetEvent _mre = new ManualResetEvent(true);
+        private readonly ConcurrentQueue<LogMessage> _messages = new();
+        private readonly ManualResetEvent _mre = new(true);
 
         private const string DateFormat = "yyyy-MM-dd HH-mm-ss";
         private const string MessageFormat = "{0:dd/MM/yyyy HH:mm:ss:ffff} [{1}]: {2}\r";

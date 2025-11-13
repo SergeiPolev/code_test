@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Factories.GameFactory;
+using Infrastructure.Services.Gameplay;
 using Levels;
-using Services;
 using UnityEngine;
 
-namespace Infrastructure
+namespace Hexes
 {
     public class HexGrid
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace LoggerFile.Element
+namespace Tools.Logger
 {
     public class LogMessage
     {

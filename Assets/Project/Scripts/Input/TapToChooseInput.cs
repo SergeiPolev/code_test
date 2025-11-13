@@ -1,8 +1,9 @@
 using System;
-using Services;
+using Hexes;
+using Infrastructure.Services.Core;
 using UnityEngine;
 
-namespace Infrastructure
+namespace Input
 {
     public class TapToChooseInput : IInputListener
     {
@@ -11,7 +12,7 @@ namespace Infrastructure
 
         private Plane _plane;
         private HexCell _currentHighlight;
-        private Vector3 _offset = new Vector3(0, 0, 0.25f);
+        private Vector3 _offset = new(0, 0, 0.25f);
 
         public event Action<(Collider, Vector3)> OnTapDown;
         public event Action<(Collider, Vector3)> OnDragTap;
@@ -77,7 +78,7 @@ namespace Infrastructure
         private Ray GetMouseRay()
         {
             Camera camera = _cameraService.Camera;
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = camera.ScreenPointToRay(UnityEngine.Input.mousePosition);
             return ray;
         }
     }

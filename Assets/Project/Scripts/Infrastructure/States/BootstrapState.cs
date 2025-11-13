@@ -1,8 +1,13 @@
-﻿using StateMachine;
-using Services;
+﻿using Factories.GameFactory;
+using Factories.UIFactory;
+using Infrastructure.Services;
+using Infrastructure.Services.Core;
+using Infrastructure.Services.Gameplay;
+using Infrastructure.Services.Progress;
+using Infrastructure.StateMachine;
 using UnityEngine;
 
-namespace Infrastructure
+namespace Infrastructure.States
 {
     public class BootstrapState : IState
     {
@@ -28,10 +33,7 @@ namespace Infrastructure
         private void RegisterServices()
         {
             _services.RegisterSingle(new StaticDataService());
-            _services.RegisterSingle(new SaveLoadService());
             _services.RegisterSingle(new LevelProgressService());
-            _services.RegisterSingle(new WalletService());
-            _services.RegisterSingle(new GameWalletService());
 
             _services.RegisterSingle(new UIFactory());
             _services.RegisterSingle(new WindowService());
@@ -56,8 +58,6 @@ namespace Infrastructure
         {
             InitCore();
             
-            _services.Single<WalletService>().Initialize();
-            _services.Single<GameWalletService>().Initialize();
             _services.Single<LevelProgressService>().Initialize(_services);
             _services.Single<GlobalBlackboard>().Initialize();
             _services.Single<BoosterService>().Initialize(_services);
@@ -91,7 +91,6 @@ namespace Infrastructure
         {
             _services.Single<StaticDataService>().Initialize();
             _services.Single<UIFactory>().Initialize(_services);
-            _services.Single<SaveLoadService>().Initialize(_services);
             _services.Single<WindowService>().Initialize(_services.Single<UIFactory>());
             
         }

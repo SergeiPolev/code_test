@@ -1,4 +1,6 @@
-namespace Infrastructure
+using Infrastructure.Services.Gameplay;
+
+namespace Hexes
 {
     public class Hex
     {

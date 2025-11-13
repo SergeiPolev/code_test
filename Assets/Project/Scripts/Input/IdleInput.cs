@@ -1,4 +1,4 @@
-namespace Infrastructure
+namespace Input
 {
     // Empty Input To Do Nothing during cutscenes
     public class IdleInput : IInputListener

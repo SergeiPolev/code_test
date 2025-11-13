@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using UniRx.Triggers; // Triggers Namepsace
-using System;
+﻿using UniRx.Triggers;
+using UnityEngine; // Triggers Namepsace
 
 namespace UniRx.Examples
 {

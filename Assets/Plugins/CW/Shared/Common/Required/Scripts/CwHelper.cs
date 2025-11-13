@@ -6,9 +6,9 @@
 	#define CW_HAS_NEW_FIND
 #endif
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using EventSystem = UnityEngine.EventSystems.EventSystem;
 
 namespace CW.Common

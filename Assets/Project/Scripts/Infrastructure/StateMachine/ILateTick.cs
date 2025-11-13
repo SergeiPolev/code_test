@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface ILateTick
+namespace Infrastructure.StateMachine
 {
-    void LateTick();
+    public interface ILateTick
+    {
+        void LateTick();
+    }
 }

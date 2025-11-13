@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Lean.Common;
+using UnityEngine;
 
 namespace Lean.Pool
 {

@@ -2,12 +2,12 @@
 
 #if UNITASK_DOTWEEN_SUPPORT
 
-using Cysharp.Threading.Tasks.Internal;
-using DG.Tweening;
 using System;
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Cysharp.Threading.Tasks.Internal;
+using DG.Tweening;
 
 namespace Cysharp.Threading.Tasks
 {

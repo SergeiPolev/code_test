@@ -1,167 +1,177 @@
 using System;
 using System.Linq;
+using Boosters.Views;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Infrastructure;
+using Extensions;
+using Factories.GameFactory;
+using Hexes;
+using Infrastructure.Services;
+using Infrastructure.Services.Core;
+using Infrastructure.Services.Gameplay;
+using Input;
+using Layer_Manager;
 using Lean.Pool;
-using Services;
 using UnityEngine;
 
-public class PaintUpperHexesBooster : IBooster
+namespace Boosters
 {
-    private CancellationAsyncService _cancellationAsyncService;
-    private IHexGridService _hexService;
-    private InputService _inputService;
-    private GameFactory _gameFactory;
-
-    private TapToChooseInput _tapToChooseInput;
-
-    private float _timer;
-    private BrushView _brush;
-    private HexCell _lastHoveredHexCell;
-
-    public bool IsActive { get; private set; }
-    
-    public event Action<BoosterProgressEvent> OnProgressChanged;
-    
-    public event Action OnActivated;
-    public event Action OnDeactivated;
-
-    public BoosterId BoosterId => BoosterId.PaintUpperHexes;
-    
-    public PaintUpperHexesBooster(AllServices services)
+    public class PaintUpperHexesBooster : IBooster
     {
-        _hexService = services.Single<IHexGridService>();
-        _inputService = services.Single<InputService>();
-        _gameFactory = services.Single<GameFactory>();
-        _cancellationAsyncService = services.Single<CancellationAsyncService>();
-    }
+        private CancellationAsyncService _cancellationAsyncService;
+        private IHexGridService _hexService;
+        private InputService _inputService;
+        private GameFactory _gameFactory;
+
+        private TapToChooseInput _tapToChooseInput;
+
+        private float _timer;
+        private BrushView _brush;
+        private HexCell _lastHoveredHexCell;
+
+        public bool IsActive { get; private set; }
     
-    public async void Activate()
-    {
-        IsActive = true;
+        public event Action<BoosterProgressEvent> OnProgressChanged;
+    
+        public event Action OnActivated;
+        public event Action OnDeactivated;
 
-        _timer = 0;
-        _brush = _gameFactory.CreateBrushView();
-        
-        _inputService.SetForcedInputType(InputType.Idle);
-
-        await _brush.Appear().AsyncWaitForCompletion().AsUniTask().AttachExternalCancellation(_cancellationAsyncService.Token);
-        
-        _tapToChooseInput = _inputService.SetForcedInputType(InputType.TapToChoose) as TapToChooseInput;
-        _tapToChooseInput.SetLayerMask(LayerManager.CellLayer);
-        _tapToChooseInput.OnDragTap += DragBrush;
-        _tapToChooseInput.OnTapUp += ChoosePile;
-        
-        OnActivated?.Invoke();
-    }
-
-    private void DragBrush((Collider, Vector3) obj)
-    {
-        var hexCell = _hexService.GetClosestCell(obj.Item2);
-
-        if (hexCell is { IsLocked: false } && !hexCell.IsEmpty())
+        public BoosterId BoosterId => BoosterId.PaintUpperHexes;
+    
+        public PaintUpperHexesBooster(AllServices services)
         {
-            if (_lastHoveredHexCell != null)
-            {
-                if (hexCell.Index == _lastHoveredHexCell.Index)
-                {
-                    return;
-                }
-                
-                _lastHoveredHexCell.ModelView.Unhovered();
-            }
-
-            _lastHoveredHexCell = hexCell;
-            _lastHoveredHexCell.ModelView.Hovered();
-            
-            var material = _gameFactory.GetColorMaterial(hexCell.GetTopColor());
-            _brush.SetInkMaterial(material);
-            
-            _brush.transform.position = hexCell.PeekTopHex().HexModelView.transform.position + Vector3.up;
-
-            return;
+            _hexService = services.Single<IHexGridService>();
+            _inputService = services.Single<InputService>();
+            _gameFactory = services.Single<GameFactory>();
+            _cancellationAsyncService = services.Single<CancellationAsyncService>();
         }
-
-        if (_lastHoveredHexCell != null)
+    
+        public async void Activate()
         {
-            _lastHoveredHexCell.ModelView.Unhovered();
-            _lastHoveredHexCell = null;
-        }
-        
-        _brush.transform.position = obj.Item2 + Vector3.up;
-    }
+            IsActive = true;
 
-    private async void ChoosePile((Collider, Vector3) obj)
-    {
-        var hexCell = _hexService.GetClosestCell(obj.Item2);
+            _timer = 0;
+            _brush = _gameFactory.CreateBrushView();
         
-        if (hexCell is { IsLocked: false } && !hexCell.IsEmpty())
-        {
             _inputService.SetForcedInputType(InputType.Idle);
 
-            _tapToChooseInput.OnDragTap -= DragBrush;
-            _tapToChooseInput.OnTapUp -= ChoosePile;
-            
-            _lastHoveredHexCell?.ModelView.Unhovered();
-            
-            ColorID colorID = hexCell.GetTopColor();
-            
-            var neighbors = _hexService.GetNeighbors(hexCell.x, hexCell.y).Where(x => !x.IsEmpty()).ToList();
-            var material = _gameFactory.GetColorMaterial(colorID);
+            await _brush.Appear().AsyncWaitForCompletion().AsUniTask().AttachExternalCancellation(_cancellationAsyncService.Token);
+        
+            _tapToChooseInput = _inputService.SetForcedInputType(InputType.TapToChoose) as TapToChooseInput;
+            _tapToChooseInput.SetLayerMask(LayerManager.CellLayer);
+            _tapToChooseInput.OnDragTap += DragBrush;
+            _tapToChooseInput.OnTapUp += ChoosePile;
+        
+            OnActivated?.Invoke();
+        }
 
-            _brush.SetInkMaterial(material);
-            await _brush.BeginColoring(hexCell.WorldPos, _gameFactory.GetColor(colorID)).ToUniTask(_cancellationAsyncService.Token);
+        private void DragBrush((Collider, Vector3) obj)
+        {
+            var hexCell = _hexService.GetClosestCell(obj.Item2);
 
-            var endColoringTween = _brush.EndColoring();
-            
-            if (neighbors.Count > 0)
+            if (hexCell is { IsLocked: false } && !hexCell.IsEmpty())
             {
-                for (var index = 0; index < neighbors.Count; index++)
+                if (_lastHoveredHexCell != null)
                 {
-                    var neighbor = neighbors[index];
-                    var hex = neighbor.PeekTopHex();
-                    var tween = hex.HexModelView.LerpColor(material, endColoringTween.Duration() - 0.1f * index);
-                    hex.ColorID = colorID;
-                    
-                    if (neighbors.Count - 1 == index)
+                    if (hexCell.Index == _lastHoveredHexCell.Index)
                     {
-                        await tween.AsyncWaitForCompletion().AsUniTask()
-                            .AttachExternalCancellation(_cancellationAsyncService.Token);
+                        return;
                     }
-                    else
+                
+                    _lastHoveredHexCell.ModelView.Unhovered();
+                }
+
+                _lastHoveredHexCell = hexCell;
+                _lastHoveredHexCell.ModelView.Hovered();
+            
+                var material = _gameFactory.GetColorMaterial(hexCell.GetTopColor());
+                _brush.SetInkMaterial(material);
+            
+                _brush.transform.position = hexCell.PeekTopHex().HexModelView.transform.position + Vector3.up;
+
+                return;
+            }
+
+            if (_lastHoveredHexCell != null)
+            {
+                _lastHoveredHexCell.ModelView.Unhovered();
+                _lastHoveredHexCell = null;
+            }
+        
+            _brush.transform.position = obj.Item2 + Vector3.up;
+        }
+
+        private async void ChoosePile((Collider, Vector3) obj)
+        {
+            var hexCell = _hexService.GetClosestCell(obj.Item2);
+        
+            if (hexCell is { IsLocked: false } && !hexCell.IsEmpty())
+            {
+                _inputService.SetForcedInputType(InputType.Idle);
+
+                _tapToChooseInput.OnDragTap -= DragBrush;
+                _tapToChooseInput.OnTapUp -= ChoosePile;
+            
+                _lastHoveredHexCell?.ModelView.Unhovered();
+            
+                ColorID colorID = hexCell.GetTopColor();
+            
+                var neighbors = _hexService.GetNeighbors(hexCell.x, hexCell.y).Where(x => !x.IsEmpty()).ToList();
+                var material = _gameFactory.GetColorMaterial(colorID);
+
+                _brush.SetInkMaterial(material);
+                await _brush.BeginColoring(hexCell.WorldPos, _gameFactory.GetColor(colorID)).ToUniTask(_cancellationAsyncService.Token);
+
+                var endColoringTween = _brush.EndColoring();
+            
+                if (neighbors.Count > 0)
+                {
+                    for (var index = 0; index < neighbors.Count; index++)
                     {
-                        await UniTask.WaitForSeconds(0.1f, cancellationToken: _cancellationAsyncService.Token);
+                        var neighbor = neighbors[index];
+                        var hex = neighbor.PeekTopHex();
+                        var tween = hex.HexModelView.LerpColor(material, endColoringTween.Duration() - 0.1f * index);
+                        hex.ColorID = colorID;
+                    
+                        if (neighbors.Count - 1 == index)
+                        {
+                            await tween.AsyncWaitForCompletion().AsUniTask()
+                                .AttachExternalCancellation(_cancellationAsyncService.Token);
+                        }
+                        else
+                        {
+                            await UniTask.WaitForSeconds(0.1f, cancellationToken: _cancellationAsyncService.Token);
+                        }
                     }
                 }
-            }
-            else
-            {
-                await endColoringTween.ToUniTask(_cancellationAsyncService.Token);
-            }
+                else
+                {
+                    await endColoringTween.ToUniTask(_cancellationAsyncService.Token);
+                }
             
-            hexCell.OnCellChanged?.Invoke(hexCell);
-            IsActive = false;
+                hexCell.OnCellChanged?.Invoke(hexCell);
+                IsActive = false;
+            }
         }
-    }
 
-    public void Tick()
-    {
-        if (IsActive == false)
+        public void Tick()
         {
-            return;
+            if (IsActive == false)
+            {
+                return;
+            }
+        
+            OnProgressChanged?.Invoke(new BoosterProgressEvent(_timer, 1, 1 - _timer));
         }
-        
-        OnProgressChanged?.Invoke(new BoosterProgressEvent(_timer, 1, 1 - _timer));
-    }
 
-    public void Deactivate()
-    {
-        IsActive = false;
+        public void Deactivate()
+        {
+            IsActive = false;
         
-        LeanPool.Despawn(_brush);
-        _inputService.ResetForcedInputType();
+            LeanPool.Despawn(_brush);
+            _inputService.ResetForcedInputType();
 
-        OnDeactivated?.Invoke();
+            OnDeactivated?.Invoke();
+        }
     }
 }

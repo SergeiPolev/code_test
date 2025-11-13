@@ -1,5 +1,8 @@
-﻿using StateMachine;
-using Services;
+﻿using Infrastructure.Services;
+using Infrastructure.Services.Core;
+using Infrastructure.Services.Gameplay;
+using Infrastructure.StateMachine;
+using UI;
 
 namespace Infrastructure
 {

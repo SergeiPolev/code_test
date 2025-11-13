@@ -2,9 +2,9 @@
 
 using System;
 using System.Linq;
-using UnityEngine;
-using Cysharp.Threading.Tasks.Internal;
 using System.Threading;
+using Cysharp.Threading.Tasks.Internal;
+using UnityEngine;
 
 #if UNITY_2019_3_OR_NEWER
 using UnityEngine.LowLevel;

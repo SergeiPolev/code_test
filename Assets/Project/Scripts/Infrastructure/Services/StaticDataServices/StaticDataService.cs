@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Levels;
 using UnityEngine;
 
 namespace Services
@@ -9,48 +10,34 @@ namespace Services
     {
         private const string StaticDataWindowsPath = "StaticData/Window/WindowStaticData";
         private const string SettingsPath = "StaticData/Settings/SettingsStaticData";
-        private const string RarityPath = "StaticData/Settings/RarityStaticData";
-        private string _vfxStaticDataPath = "StaticData/VFX/VFXStaticData";
-        private string _prefabStaticDataPath = "StaticData/Prefabs/PrefabStaticData";
-        private string _materialsStaticDataPath = "StaticData/Materials/MaterialsStaticData";
+        private const string _prefabStaticDataPath = "StaticData/Prefabs/PrefabStaticData";
+        private const string _colorsStaticData = "StaticData/Colors/ColorsStaticData";
+        private const string _levelsStaticPath = "StaticData/Levels";
 
         private Dictionary<WindowId, WindowBase> _windowConfigs;
         public SettingsStaticData Settings { get; set; }
         public PrefabStaticData Prefabs { get; set; }
-        public MaterialsStaticData Materials { get; set; }
-
-        public VFXStaticData VfxStaticData;
+        public List<LevelAsset> Levels { get; set; }
+        public ColorsStaticData ColorsStaticData { get; set; }
 
         public void Initialize()
         {
             LoadWindows();
             LoadSettings();
             LoadPrefabs();
-            LoadMaterials();
             LoadLevels();
-            LoadVFX();
+            LoadColors();
         }
 
-        private void LoadMaterials()
+        private void LoadColors()
         {
-            Materials = Resources.Load<MaterialsStaticData>(_materialsStaticDataPath);
+            ColorsStaticData = Resources.Load<ColorsStaticData>(_colorsStaticData);
         }
 
         private void LoadPrefabs()
         {
             Prefabs = Resources.Load<PrefabStaticData>(_prefabStaticDataPath);
         }
-        
-        public WindowBase ForWindow(WindowId windowId)
-        {
-            if (_windowConfigs.TryGetValue(windowId, out var windowConfig))
-            {
-                return windowConfig;
-            }
-
-            throw new Exception($"Error! Dont found static data of type {windowId}");
-        }
-
 
         private void LoadSettings()
         {
@@ -64,12 +51,19 @@ namespace Services
                 .ToDictionary(x => x.WindowID, x => x);
         }
 
-        private void LoadVFX()
-        {
-            VfxStaticData = Resources.Load<VFXStaticData>(_vfxStaticDataPath);
-        }
         private void LoadLevels()
         {
+            Levels = Resources.LoadAll<LevelAsset>(_levelsStaticPath).ToList();
+        }
+
+        public WindowBase ForWindow(WindowId windowId)
+        {
+            if (_windowConfigs.TryGetValue(windowId, out var windowConfig))
+            {
+                return windowConfig;
+            }
+
+            throw new Exception($"Error! Can't find static data of type {windowId}");
         }
     }
 }

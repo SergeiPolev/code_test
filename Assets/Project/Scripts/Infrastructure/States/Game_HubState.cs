@@ -24,8 +24,6 @@ namespace Infrastructure
             if (_windowService.Open(WindowId.HUB, out _uiHub) == false)
                 _uiHub = _windowService.GetOrCreateWindow<HubWindow>(WindowId.HUB);
             _uiHub.OnGameStartEvent += Window_OnGameStartEvent;
-
-            _windowService.Open(WindowId.HUB_Navigation);
         }
 
         private void Window_OnGameStartEvent()
@@ -46,7 +44,6 @@ namespace Infrastructure
         {
             _uiHub.OnGameStartEvent -= Window_OnGameStartEvent;
             _windowService.Close(WindowId.HUB);
-            _windowService.Close(WindowId.HUB_Navigation);
         }
     }
 }

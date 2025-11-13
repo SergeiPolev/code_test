@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96df837f41fed594bb06855604cb1ebd, type: 3}
   m_Name: SettingsStaticData
   m_EditorClassIdentifier: 
-  UseJSONAsConfig: 0
-  MasterURL: 1rQC8zl2GLteXTT1s7kNLVRV-oF_oTQJ40tnYpuIiN4s
+  UseJSONAsConfig: 1
+  MasterURL: 

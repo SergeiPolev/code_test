@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Infrastructure;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -9,11 +10,14 @@ namespace Services
     {
         private Camera _mainCamera;
         private CameraGroup _cameraGroup;
+        private IHexGridService _hexGridService;
 
         public CameraGroup CameraGroup => _cameraGroup;
+        public Camera Camera => _mainCamera;
         
-        public void Initialize()
+        public void Initialize(IHexGridService hexGridService)
         {
+            _hexGridService = hexGridService;
             _cameraGroup = Object.FindObjectOfType<CameraGroup>();
             _mainCamera = Camera.main;
             //SetWidth(10f);
@@ -37,6 +41,15 @@ namespace Services
         public void NextStage(Action stageMoved)
         {
             _cameraGroup.transform.DOMoveY(-40f,2f).SetRelative().OnComplete(stageMoved.Invoke);
+        }
+
+        public void SetCenterPos()
+        {
+            Vector3 gridCenter = _hexGridService.GetGridCenterPos();
+            var delta = gridCenter - _cameraGroup.TargetPoint.position;
+            
+            _cameraGroup.TargetPoint.position = gridCenter;
+            _cameraGroup.VirtualCamera.OnTargetObjectWarped(_cameraGroup.TargetPoint, delta);
         }
     }
 }

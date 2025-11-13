@@ -143,7 +143,7 @@ namespace Services
             // Create TimeStamp
             string path = Application.dataPath + "/Resources/bakedTime.txt";
             //Create File
-            await File.WriteAllTextAsync(path, $"{sheet.miscellaneous.customDict["config_name"]} {DateTime.UtcNow.ToUniversalTime()} UTC");
+            await File.WriteAllTextAsync(path, $"{DateTime.UtcNow.ToUniversalTime()} UTC");
         }
 
     }

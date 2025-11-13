@@ -10,7 +10,6 @@ namespace Infrastructure
 
         private void Awake()
         {
-            SetFPSLimit();
             SetScreenSleep();
             SetStateMachine();
         }
@@ -25,12 +24,6 @@ namespace Infrastructure
             _stateMachine.FixedTick();
         }
 
-        private void SetFPSLimit()
-        {
-            //QualitySettings.vSyncCount = 0;
-            Application.targetFrameRate = 60;
-        }
-
         private void SetScreenSleep()
         {
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -38,7 +31,7 @@ namespace Infrastructure
 
         private void SetStateMachine()
         {
-            _stateMachine = new GameStateMachine(AllServices.Container, this);
+            _stateMachine = new GameStateMachine(AllServices.Container, this, this);
             _stateMachine.Enter<BootstrapState>();
         }
 

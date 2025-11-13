@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Services
@@ -9,6 +10,7 @@ namespace Services
 
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<ISaveProgressWriter> ProgressWirters { get; } = new();
+        public List<IDisposable> Disposables { get; } = new();
 
         public void RegisterSingle<TService>(TService implementation) where TService : IService
         {
@@ -17,6 +19,11 @@ namespace Services
             if (Implementation<TService>.ServiceInstance is ISavedProgressReader progressReader)
             {
                 Register(progressReader);
+            }
+
+            if (Implementation<TService>.ServiceInstance is IDisposable disposable)
+            {
+                Disposables.Add(disposable);
             }
         }
 

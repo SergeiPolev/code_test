@@ -12,11 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6451035a03744d48a56abbe3b89868e, type: 3}
   m_Name: PrefabStaticData
   m_EditorClassIdentifier: 
-  BlockPrefab: {fileID: 8196771191051097211, guid: 3b1c5db859b92e54baeeb5739c48e5a8, type: 3}
-  DiggerPrefabs:
-  - {fileID: 6072534347468386808, guid: f097b7d3e619a114d88c18bbb89e5fdc, type: 3}
-  - {fileID: 6072534347468386808, guid: 054073d4d44ee1544982f249c523adce, type: 3}
-  - {fileID: 2292035669027498389, guid: 11624790a43489240b41ab104922c507, type: 3}
-  - {fileID: 2292035669027498389, guid: cc0712845ac5a6d4895a390c37ec6793, type: 3}
-  - {fileID: 1337165318211609375, guid: 229bb2e1aff8f1440bef1ddf14ac3a03, type: 3}
-  - {fileID: 6072534347468386808, guid: af41bbf96a310e04eb0a42271947ee43, type: 3}
+  HexModelView: {fileID: 6918777406357876940, guid: 0aba4b60733d326469d923cae04a071a, type: 3}
+  HexCellView: {fileID: 3523107681726393921, guid: f71978b470b7f5046a1e1b32cc834f4c, type: 3}
+  HexPile: {fileID: 1648287305095700997, guid: a78a315d9b186e84885fb050ebc9be6e, type: 3}
+  BrushView: {fileID: 9086439607586143623, guid: f41e0b031ac5be045aefc9c78042436f, type: 3}
+  HammerView: {fileID: 5891380207336163371, guid: c26e23da878bf1e4d984308613bc5fbf, type: 3}

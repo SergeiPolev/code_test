@@ -35,8 +35,6 @@ namespace Infrastructure
 
         private void NextStage()
         {
-            AllServices.Container.Single<SDKService>().Level_Step_Event();
-            
             _sessionStateMachine.Enter<Level_StartLevelState>();
         }
 

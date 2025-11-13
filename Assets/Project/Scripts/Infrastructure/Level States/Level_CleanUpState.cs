@@ -7,19 +7,25 @@ namespace Infrastructure
     {
         private IStateChanger _stateChanger;
         private WindowService _windowService;
+        private IHexGridService _gridService;
+        private ResultService _resultService;
+        private HexPilesService _pilesService;
 
         public Level_CleanUpState(IStateChanger stateChanger, IGameStateChanger gameStateChanger, AllServices services)
         {
             _stateChanger = stateChanger;
             _windowService = services.Single<WindowService>();
+            _gridService = services.Single<IHexGridService>();
+            _resultService = services.Single<ResultService>();
+            _pilesService = services.Single<HexPilesService>();
         }
         public void Enter()
         {
-#if DEBUG
-            _windowService.Close(WindowId.HUD_Debug);
-#endif
             _windowService.Close(WindowId.HUD);
-            _windowService.Close(WindowId.Wallet);
+            
+            _resultService.OnLevelExit();
+            _gridService.CleanUpGrid();
+            _pilesService.ClearPiles();
         }
 
         public void Exit()

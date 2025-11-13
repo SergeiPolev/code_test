@@ -45,7 +45,7 @@ namespace Infrastructure
             
             await Task.Delay(100);
             
-            _stateChanger.Enter<Game_LoadProgressState>();
+            _stateChanger.Enter<Game_InitializeState>();
         }
 
         public void Exit()

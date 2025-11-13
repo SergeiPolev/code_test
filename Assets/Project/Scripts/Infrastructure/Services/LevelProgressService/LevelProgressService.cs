@@ -1,5 +1,6 @@
-using Data;
-using System;
+using System.Collections.Generic;
+using Infrastructure;
+using Levels;
 using UnityEngine;
 
 namespace Services
@@ -15,6 +16,7 @@ namespace Services
     {
         private float _timer;
         private PauseService _pause;
+        private StaticDataService _staticDataService;
         private SaveLoadService _save;
         private LevelProgressData _data;
         
@@ -36,12 +38,17 @@ namespace Services
         public int StageIndex => CurrentStageNumber - 1;
         public int CurrentStageNumber { get; private set; }
 
+        public LevelAsset CurrentLevelConfig { get; set; }
         public float LevelProgress { get; set; }
+        
+        public int HexesGoal { get; set; }
+        public int HexesCurrent { get; set; }
 
         public void Initialize(AllServices services )
         {
             _pause = services.Single<PauseService>();
             _save = services.Single<SaveLoadService>();
+            _staticDataService = services.Single<StaticDataService>();
         }
 
         public void WriteProgress(SaveLoadService saveService)
@@ -66,15 +73,16 @@ namespace Services
             _timer += Time.deltaTime;
         }
 
-
-
-
         #region Level
 
         public void LevelStarted()
         {
             CurrentStageNumber = 1;
             _timer = 0;
+            
+            CurrentLevelConfig = _staticDataService.Levels[(CurrentLevelNumber - 1) % _staticDataService.Levels.Count];
+            HexesGoal = CurrentLevelConfig.targetBurnedHexes;
+            HexesCurrent = 0;
         }
 
         public void LevelComplete()
@@ -131,5 +139,10 @@ namespace Services
 
 
         #endregion
+
+        public List<ColorID> GetColors()
+        {
+            return CurrentLevelConfig.GetAvailableColors(HexesCurrent);
+        }
     }
 }

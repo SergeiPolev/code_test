@@ -24,4 +24,28 @@ public static class EnumExtensions
 
 		return list.GetRandom();
 	}
+	
+	public static T RandomEnumValueExcept<T> (IEnumerable<T> except)
+	{
+		var v = Enum.GetValues (typeof (T));
+
+		List<T> list = new List<T>();
+
+		for (int i = 0; i < v.Length; i++)
+		{
+			var value = (T)v.GetValue(i);
+
+			foreach (T e in except)
+			{
+				if (e.Equals(value))
+				{
+					continue;
+				}
+				
+				list.Add(value);
+			}
+		}
+
+		return list.GetRandom();
+	}
 }
